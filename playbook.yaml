@@ -1,0 +1,13 @@
+- name: Configure new machines
+  hosts: all
+  become: True
+  # gather_facts: false
+  vars_files:
+    - secrets.yaml
+
+
+  roles:
+    - installing_packages
+    - add_users
+    - copy_ssh
+ 

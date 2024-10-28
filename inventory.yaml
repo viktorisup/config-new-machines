@@ -1,0 +1,23 @@
+all:
+  children:
+    target-hosts:
+
+      vars:
+        ssh_list:
+          farnsford: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCZET0oAJI+nZ19lHIvxU+CkV1vGzZrft50UJ8SRo/B5+jeLo4udypSAMM0aVekY2SiXdADJZvjUP5d1nwUt8XUHVALkwWChm8sl+qiWUiS5ghZ34xbMs4JVF0Ohuq+3fz9CmJqCLTFlaQqofTmtoPegBPL0xZLUpvq6wbjzuvjB6cIV3oo3j1Z1p50l0MXfsHOP2TLPYlX+kQDJAA83mesr+WhNNHkF5aVZL+p1eR5zYDSHyobsJZ6bv8a665ba8AePCSMZAMKaFAjlLygXg4BRqwZnsCogm/d4JUWJ906InVq1MdehUa5gJvTQweU3hIVCHGCFEpUjO7rggNv1+Mt farnsford@MacBook-Pro-farnsford.local"
+          che: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILEhKmyX4uvcJwoV3y96qjS66x41Z7ZWODRCZAvUFi0d che"
+          isup: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFZNU5Mi6NjvOaZ2htIGpt0Efw8lkdXp88rEH/2StIgD isupov@pg-test"
+          mzazulin: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC6N8Yk3gcyj3EcAsCiiBvr3fVqOIGh69cnvUSXeO8NzUk03WAHdNHsdh/odjfqdEfu1C+KFZcaXsGyp38/T+eqKab8Af3+Rl7Soq4xLf6aYBmy1mMSaQmZ+20KQOXBIAnUOaslTRqwFW7zaGYCMNHbWKfiBRt7OK5NF7Ot0nV6zAnlUlosUCpmtD4/sdEGNP2khyNaAJ9M1AE1rTZchUeAwvQK0RW7BUMxaBvCv4B/uQkosaGyq71X14kE0FbeG+6IC1a1vnCE4/DAoLCVvwv+lMiZ64ytmJ7Wu5vdkM/cpybZGjUUMvc2wjpTcfb+tY6m0+wbFgb1W1a7FSaaXpG1K1YsmuAG7bW9I6v7Y8s+VztxnUkAwTMy7JEdWzcLlGUdTUjDgcxcGIPGQtgl4sMaibAq+JIjR1mGpxvzLvbty+pZkR68Dvz0yifwmIyZPr8pFp/pmLUS6m8pe0dMrfjsknuP4DnQIm7CzJBR5lcc1vdEBsXitaSYBzQvm/aLoF/HomI6WtL1LdLCfxk+Is5Ojnsc0mAcaBw5SRNpLBQFyreny6zcvivzdAB4jE2olpbKfrUHpyGkElaSx+zOfT7Io+KpFQsksEOKKA+oJgYiGkpCurfx3nwAcw6cGT2qc+PAvVLItoxBbB0KF3pWMoMbkWrXAEyeUMN130ry9tx1MQ== mzazulin@MY
+          # bob: 'no-ssh'
+        ssh_port_listen: 22
+        PasswordAuthentication: 'no'
+        PermitRootLogin: 'prohibit-password'
+        Include_sshd_config_d: no
+
+      hosts:
+        target-host1:
+          ansible_host: xxx.xxx.xxx.xxx
+          ansible_user: isup
+          ansible_password: "xxxxxxx"
+          ansible_become_pass: "xxxxxxx"
+          ansible_port: 22

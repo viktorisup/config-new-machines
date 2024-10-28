@@ -1,0 +1,73 @@
+---
+# tasks file for copy_ssh
+
+- name: Block prepare ssh directory
+  block:
+    - name: create ssh directory
+      ansible.builtin.file:
+        path: /home/{{item.key}}/.ssh
+        state: directory
+        owner: "{{item.key}}"
+        group: "{{item.key}}"
+        mode: '0755'
+      loop: 
+        "{{ ssh_list | dict2items }}"
+
+    - name: copy ssh pub key
+      ansible.builtin.copy:
+        dest: "/home/{{ item.key }}/.ssh/authorized_keys"
+        content: "{{ ssh_list[item.key] }}"
+        owner: "{{item.key}}"
+        group: "{{item.key}}"
+        mode: '0600'
+      loop: "{{ ssh_list | dict2items }}"
+
+  when:
+      ssh_list[item.key] != 'no-ssh'
+
+# - name: check sshd is exist
+#   ansible.builtin.stat:
+#     path: /etc/ssh/sshd_config
+#   register: file_status
+
+- name: Create backup sshd_config
+  ansible.builtin.copy:
+    src: /etc/ssh/sshd_config
+    dest: /etc/ssh/sshd_config.backup
+    remote_src: true
+  ignore_errors: true
+  # when: file_status.stat.exists is not defined
+
+- name: Copy config sshd
+  ansible.builtin.template:
+    src: sshd.j2
+    dest: /etc/ssh/sshd_config
+
+- name: Restart service sshd
+  ansible.builtin.service:
+    name: sshd
+    state: restarted
+  when:
+    - ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+    - ansible_distribution_version <= "22" or ansible_distribution_version <= "12.7"
+
+- name: Restart service ssh
+  ansible.builtin.service:
+    name: ssh
+    state: restarted
+  when:
+    - ansible_distribution == "Ubuntu"
+    - ansible_distribution_version >= "24"
+
+# - name: os release
+#   debug:
+#     msg:
+#       - OS Family: "{{ ansible_os_family }}"
+#       - Distribution: "{{ ansible_distribution }}"
+#       - Version: "{{ ansible_distribution_version }}"
+
+
+
+
+
+

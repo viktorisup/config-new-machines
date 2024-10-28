@@ -1,0 +1,14 @@
+---
+# tasks file for installing_packages
+- name: Install packages
+  ansible.builtin.apt:
+    name:
+      - sudo
+      - curl
+      - wget
+      - vim
+      - nano
+      - tar
+      - unzip
+      - iptables-persistent
+    update_cache: yes

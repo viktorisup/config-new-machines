@@ -1,0 +1,20 @@
+---
+# tasks file for add_users
+- name: create home group
+  ansible.builtin.group:
+    name: "{{item.key}}"
+    state: present
+  loop:
+    "{{ ssh_list | dict2items }}"
+
+- name: add users
+  ansible.builtin.user:
+    name: "{{item.key}}"
+    password: "$6$DqHQ797MtrZc2cs/$zIZ99bH34TtKy/9h8WIWnfrvfXJXJgFf3Cijf5spwGkbZq7DzYcj5XGEGRWW3nEsWpzQBT7a1n8Nf4zrspfFN0"
+    create_home: yes
+    group: "{{item.key}}"
+    groups: 'sudo'
+    append: true
+    shell: '/bin/bash'
+  loop: 
+    "{{ ssh_list | dict2items }}"
